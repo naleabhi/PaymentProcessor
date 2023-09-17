@@ -1,0 +1,48 @@
+server:
+  port: 8082
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: donotreplytestkafka12@gmail.com
+    password: zdokvjxzrmdjeata #KafkaTestingEmail
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  kafka:
+    template:
+      default-topic: item-events
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: payment-group-id
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: latest
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: -1
+      batch-size: 3
+  datasource:
+    url: jdbc:h2:mem:itemservice
+    driver-class-name: org.h2.Driver
+  jpa:
+    generate-ddl: true
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+item:
+  deadTopic: dead-item
+  retryTopic: item-retry
+
+
